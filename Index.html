@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Passeio de Escuna / Lancha</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen pb-16">
+    <!-- Header -->
+    <header class="bg-sky-700 shadow-lg py-6 px-4 mb-8 text-center border-b border-sky-600">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-black tracking-wide text-white uppercase flex items-center justify-center gap-3">
+                <i class="fa-solid fa-anchor text-sky-300"></i> Passeio de Escuna / Lancha
+            </h1>
+            <p class="text-sky-100 mt-2 text-sm md:text-base font-medium">
+                📅 Data: Sábado, 12/12/2026 | 💰 Desconto especial: <span class="bg-emerald-600 px-2 py-0.5 rounded text-white font-bold">R$ 300,00</span>
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 space-y-8">
+        <!-- Dashboard / Status da Tripulação -->
+        <section class="bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700">
+            <h2 class="text-xl font-bold text-sky-400 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-users"></i> Status da Tripulação (Meta: 20 Pessoas)
+            </h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div class="bg-slate-700/60 p-4 rounded-xl text-center border border-slate-600">
+                    <span class="block text-slate-400 text-xs uppercase font-semibold">Total Confirmado</span>
+                    <span id="total-people" class="text-3xl font-extrabold text-white">0</span>
+                    <span class="text-xs text-slate-400"> / 20 vagas</span>
+                </div>
+                <div class="bg-slate-700/60 p-4 rounded-xl text-center border border-slate-600">
+                    <span class="block text-slate-400 text-xs uppercase font-semibold">Vagas Faltantes</span>
+                    <span id="remaining-slots" class="text-3xl font-extrabold text-amber-400">20</span>
+                </div>
+                <div class="bg-slate-700/60 p-4 rounded-xl text-center border border-slate-600">
+                    <span class="block text-slate-400 text-xs uppercase font-semibold">Valor por Pessoa (Base R$ 1.800)</span>
+                    <span id="price-per-person" class="text-2xl font-extrabold text-emerald-400">R$ 75,00</span>
+                    <span id="sinal-person" class="block text-xs text-slate-300 mt-1">Sinal (50%): R$ 37,50</span>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-700 h-4 rounded-full overflow-hidden mb-2">
+                <div id="progress-bar" class="bg-gradient-to-r from-sky-500 to-emerald-500 h-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <p id="status-message" class="text-xs text-slate-400 text-right">Faltam algumas pessoas de bem para fechar o grupo! (rsrs)</p>
+        </section>
+
+        <!-- Lista de Participantes e Acompanhantes -->
+        <section class="bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700">
+            <h2 class="text-xl font-bold text-sky-400 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-user-group"></i> Participantes e Acompanhantes (0 a 3)
+            </h2>
+            <p class="text-sm text-slate-400 mb-6">Cada titular pode levar no máximo 3 acompanhantes. Crianças contam como parte da tripulação conforme normas da Marina.</p>
+
+            <div id="participants-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Roteiros e Votação -->
+        <section class="bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700">
+            <h2 class="text-xl font-bold text-sky-400 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-map-location-dot"></i> Escolha de Roteiros & Votação
+            </h2>
+            <p class="text-sm text-slate-400 mb-6">Praia das Neves e Prainha possuem o mesmo preço promocional e são os mais vantajosos (2 em 1)!</p>
+
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Pagamento e Resumo -->
+        <section class="bg-gradient-to-br from-slate-800 to-sky-900/40 rounded-2xl p-6 shadow-xl border border-sky-800/50">
+            <h2 class="text-xl font-bold text-sky-300 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-wallet"></i> Informações de Pagamento
+            </h2>
+            <div class="space-y-3 text-slate-300 text-sm md:text-base">
+                <p class="flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-emerald-400"></i>
+                    <span><strong>Prazo do Sinal (50%):</strong> Até o dia <span class="text-white font-bold underline">25/11/2026</span>.</span>
+                </p>
+                <p class="flex items-center gap-2">
+                    <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i>
+                    <span><strong>Condição:</strong> Valor rateado igualmente entre os 20 integrantes após deduzir o desconto de R$ 300,00.</span>
+                </p>
+                <p class="flex items-center gap-2 bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                    <i class="fa-solid fa-qrcode text-emerald-400 text-lg"></i>
+                    <span><strong>Chave Pix (Celular):</strong> <code class="text-emerald-400 font-mono font-bold">71 991047114</code></span>
+                </p>
+            </div>
+
+            <!-- Botão WhatsApp -->
+            <div class="mt-6 pt-4 border-t border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span class="text-xs text-slate-400 italic">Clique abaixo para copiar o resumo e enviar no grupo do WhatsApp.</span>
+                <button onclick="copyWhatsAppMessage()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Copiar Resumo para o WhatsApp
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const participantsData = [
+            { name: "Paulo", companions: 0 },
+            { name: "Solange", companions: 0 },
+            { name: "Daniel", companions: 0 },
+            { name: "Vaguinho", companions: 0 },
+            { name: "Neném", companions: 0 },
+            { name: "Beto", companions: 0 },
+            { name: "Rodrigo", companions: 0 },
+            { name: "Cassia", companions: 0 }
+        ];
+
+        const destinationsData = [
+            { name: "Praia das Neves & Prainha (Combo / Favorito)", price: 1800, votes: 0, highlight: true },
+            { name: "Loreto (Piscinas Naturais)", price: 2300, votes: 0, highlight: false },
+            { name: "Ilha dos Frades", price: 2300, votes: 0, highlight: false },
+            { name: "Ilha de Itaparica", price: 2500, votes: 0, highlight: false }
+        ];
+
+        let selectedDestinationIndex = 0; // Padrão: Praia das Neves & Prainha
+
+        function renderApp() {
+            renderParticipants();
+            renderDestinations();
+            updateCalculations();
+        }
+
+        function renderParticipants() {
+            const container = document.getElementById("participants-grid");
+            container.innerHTML = "";
+
+            participantsData.forEach((p, index) => {
+                const card = document.createElement("div");
+                card.className = "bg-slate-700/40 p-4 rounded-xl border border-slate-600 flex items-center justify-between";
+                card.innerHTML = `
+                    <div>
+                        <span class="font-bold text-white text-base">${p.name}</span>
+                        <span class="block text-xs text-slate-400">Titular + Acompanhantes</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label for="comp-${index}" class="text-xs text-slate-300">Acomp:</label>
+                        <select id="comp-${index}" onchange="updateCompanions(${index}, this.value)" class="bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-1.5 focus:outline-none focus:border-sky-500 font-medium">
+                            <option value="0" ${p.companions === 0 ? 'selected' : ''}>0</option>
+                            <option value="1" ${p.companions === 1 ? 'selected' : ''}>1</option>
+                            <option value="2" ${p.companions === 2 ? 'selected' : ''}>2</option>
+                            <option value="3" ${p.companions === 3 ? 'selected' : ''}>3</option>
+                        </select>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderDestinations() {
+            const container = document.getElementById("destinations-grid");
+            container.innerHTML = "";
+
+            destinationsData.forEach((d, index) => {
+                const isSelected = selectedDestinationIndex === index;
+                const card = document.createElement("div");
+                card.className = `p-4 rounded-xl border transition cursor-pointer flex flex-col justify-between ${
+                    d.highlight ? 'bg-sky-950/40 border-sky-500/80' : 'bg-slate-700/40 border-slate-600'
+                } ${isSelected ? 'ring-2 ring-emerald-500' : ''}`;
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-bold text-white text-sm sm:text-base">${d.name}</span>
+                            <span class="text-emerald-400 font-extrabold text-sm">R$ ${d.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        </div>
+                        ${d.highlight ? '<span class="inline-block bg-sky-600/30 text-sky-300 text-[10px] px-2 py-0.5 rounded font-semibold mb-2">⭐ Preferência / Mais Vantajoso</span>' : ''}
+                    </div>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-600/50">
+                        <span class="text-xs text-slate-300 font-medium"><i class="fa-solid fa-check-to-slot text-sky-400"></i> Votos: <strong class="text-white">${d.votes}</strong></span>
+                        <button onclick="voteDestination(${index})" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                            Votar neste
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateCompanions(index, value) {
+            participantsData[index].companions = parseInt(value);
+            updateCalculations();
+        }
+
+        function voteDestination(index) {
+            selectedDestinationIndex = index;
+            destinationsData[index].votes++;
+            renderDestinations();
+            updateCalculations();
+        }
+
+        function updateCalculations() {
+            let totalPeople = participantsData.reduce((acc, curr) => acc + 1 + curr.companions, 0);
+            const maxSlots = 20;
+            let remaining = maxSlots - totalPeople;
+            if (remaining < 0) remaining = 0;
+
+            document.getElementById("total-people").innerText = totalPeople;
+            document.getElementById("remaining-slots").innerText = remaining;
+
+            const percentage = Math.min((totalPeople / maxSlots) * 100, 100);
+            document.getElementById("progress-bar").style.width = `${percentage}%`;
+
+            const currentDest = destinationsData[selectedDestinationIndex];
+            const discount = 300;
+            const finalTotal = Math.max(currentDest.price - discount, 0);
+            
+            const pricePerPerson = finalTotal / maxSlots;
+            const sinalPerson = pricePerPerson / 2;
+
+            document.getElementById("price-per-person").innerText = `R$ ${pricePerPerson.toFixed(2).replace('.', ',')}`;
+            document.getElementById("sinal-person").innerText = `Sinal (50%): R$ ${sinalPerson.toFixed(2).replace('.', ',')}`;
+
+            const statusMsg = document.getElementById("status-message");
+            if (totalPeople >= 20) {
+                statusMsg.innerText = "🎉 Meta de 20 pessoas atingida! Vagas completas!";
+                statusMsg.className = "text-xs text-emerald-400 font-bold text-right";
+            } else {
+                statusMsg.innerText = `Faltam ${remaining} pessoas para compor os 20.`;
+                statusMsg.className = "text-xs text-amber-400 font-medium text-right";
+            }
+        }
+
+        function copyWhatsAppMessage() {
+            let totalPeople = participantsData.reduce((acc, curr) => acc + 1 + curr.companions, 0);
+            const currentDest = destinationsData[selectedDestinationIndex];
+            const discount = 300;
+            const finalTotal = Math.max(currentDest.price - discount, 0);
+            const pricePerPerson = finalTotal / 20;
+            const sinalPerson = pricePerPerson / 2;
+
+            let msg = `🚤 *PASSEIO DE ESCUNA / LANCHA* 🚤\n\n`;
+            msg += `📅 *Data:* Sábado, 12/12/2026\n`;
+            msg += `📍 *Destino Escolhido:* ${currentDest.name}\n`;
+            msg += `👥 *Participantes Atuais:* ${totalPeople}/20 confirmados\n\n`;
+            
+            msg += `📋 *Lista de Presença:* \n`;
+            participantsData.forEach(p => {
+                msg += `- ${p.name} (+${p.companions} acomp.)\n`;
+            });
+
+            msg += `\n💰 *Financeiro (Com R$ 300 de desconto):*\n`;
+            msg += `- Valor por pessoa (base 20 pax): R$ ${pricePerPerson.toFixed(2).replace('.', ',')}\n`;
+            msg += `- *Sinal de 50%:* R$ ${sinalPerson.toFixed(2).replace('.', ',')} (Até 25/11)\n\n`;
+            msg += `💳 *Chave Pix (Celular):* 71 991047114\n\n`;
+            msg += `Favor confirmar presença e enviar o comprovante do sinal!`;
+
+            navigator.clipboard.writeText(msg).then(() => {
+                alert("Resumo copiado com sucesso para a área de transferência com a chave Pix! Cole no WhatsApp.");
+            });
+        }
+
+        renderApp();
+    </script>
+</body>
+  </html>
+  
