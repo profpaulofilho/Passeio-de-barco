@@ -38,7 +38,7 @@
                     <span id="remaining-slots" class="text-3xl font-extrabold text-amber-400">20</span>
                 </div>
                 <div class="bg-slate-700/60 p-4 rounded-xl text-center border border-slate-600">
-                    <span class="block text-slate-400 text-xs uppercase font-semibold">Valor por Pessoa (Base R$ 1.800)</span>
+                    <span class="block text-slate-400 text-xs uppercase font-semibold">Valor por Pessoa</span>
                     <span id="price-per-person" class="text-2xl font-extrabold text-emerald-400">R$ 75,00</span>
                     <span id="sinal-person" class="block text-xs text-slate-300 mt-1">Sinal (50%): R$ 37,50</span>
                 </div>
@@ -48,18 +48,31 @@
             <div class="w-full bg-slate-700 h-4 rounded-full overflow-hidden mb-2">
                 <div id="progress-bar" class="bg-gradient-to-r from-sky-500 to-emerald-500 h-full transition-all duration-500" style="width: 0%"></div>
             </div>
-            <p id="status-message" class="text-xs text-slate-400 text-right">Faltam algumas pessoas de bem para fechar o grupo! (rsrs)</p>
+            <p id="status-message" class="text-xs text-slate-400 text-right">Faltam pessoas de bem para fechar o grupo! (rsrs)</p>
+        </section>
+
+        <!-- Adicionar Novo Participante -->
+        <section class="bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700">
+            <h2 class="text-xl font-bold text-sky-400 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-user-plus"></i> Adicionar Nova Pessoa de Bem
+            </h2>
+            <div class="flex gap-2 mt-4">
+                <input type="text" id="new-participant-name" placeholder="Nome do participante..." class="flex-1 bg-slate-700 text-white px-4 py-2 rounded-xl border border-slate-600 focus:outline-none focus:border-sky-500">
+                <button onclick="addParticipant()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-6 py-2 rounded-xl transition">
+                    Adicionar
+                </button>
+            </div>
         </section>
 
         <!-- Lista de Participantes e Acompanhantes -->
         <section class="bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700">
             <h2 class="text-xl font-bold text-sky-400 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-user-group"></i> Participantes e Acompanhantes (0 a 3)
+                <i class="fa-solid fa-user-group"></i> Participantes e Acompanhantes
             </h2>
-            <p class="text-sm text-slate-400 mb-6">Cada titular pode levar no máximo 3 acompanhantes. Crianças contam como parte da tripulação conforme normas da Marina.</p>
+            <p class="text-sm text-slate-400 mb-6">Cada titular pode levar até 3 acompanhantes. Se alguém não puder ir, clique no botão de remover.</p>
 
             <div id="participants-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Preenchido via JavaScript -->
+                <!-- Carregado via Banco de Dados -->
             </div>
         </section>
 
@@ -68,10 +81,8 @@
             <h2 class="text-xl font-bold text-sky-400 mb-2 flex items-center gap-2">
                 <i class="fa-solid fa-map-location-dot"></i> Escolha de Roteiros & Votação
             </h2>
-            <p class="text-sm text-slate-400 mb-6">Praia das Neves e Prainha possuem o mesmo preço promocional e são os mais vantajosos (2 em 1)!</p>
-
-            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Preenchido via JavaScript -->
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <!-- Roteiros -->
             </div>
         </section>
 
@@ -81,24 +92,13 @@
                 <i class="fa-solid fa-wallet"></i> Informações de Pagamento
             </h2>
             <div class="space-y-3 text-slate-300 text-sm md:text-base">
-                <p class="flex items-center gap-2">
-                    <i class="fa-solid fa-calendar-check text-emerald-400"></i>
-                    <span><strong>Prazo do Sinal (50%):</strong> Até o dia <span class="text-white font-bold underline">25/11/2026</span>.</span>
-                </p>
-                <p class="flex items-center gap-2">
-                    <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i>
-                    <span><strong>Condição:</strong> Valor rateado igualmente entre os 20 integrantes após deduzir o desconto de R$ 300,00.</span>
-                </p>
-                <p class="flex items-center gap-2 bg-slate-900/60 p-3 rounded-lg border border-slate-700">
-                    <i class="fa-solid fa-qrcode text-emerald-400 text-lg"></i>
-                    <span><strong>Chave Pix (Celular):</strong> <code class="text-emerald-400 font-mono font-bold">71 991047114</code></span>
+                <p>📅 <strong>Prazo do Sinal (50%):</strong> Até <span class="text-white font-bold underline">25/11/2026</span>.</p>
+                <p class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
+                    💳 <strong>Chave Pix (Celular):</strong> <code class="text-emerald-400 font-mono font-bold">71 991047114</code>
                 </p>
             </div>
-
-            <!-- Botão WhatsApp -->
-            <div class="mt-6 pt-4 border-t border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <span class="text-xs text-slate-400 italic">Clique abaixo para copiar o resumo e enviar no grupo do WhatsApp.</span>
-                <button onclick="copyWhatsAppMessage()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+            <div class="mt-6 pt-4 border-t border-slate-700 flex justify-end">
+                <button onclick="copyWhatsAppMessage()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition flex items-center gap-2">
                     <i class="fa-brands fa-whatsapp text-xl"></i> Copiar Resumo para o WhatsApp
                 </button>
             </div>
@@ -106,25 +106,58 @@
     </main>
 
     <script>
-        const participantsData = [
-            { name: "Paulo", companions: 0 },
-            { name: "Solange", companions: 0 },
-            { name: "Daniel", companions: 0 },
-            { name: "Vaguinho", companions: 0 },
-            { name: "Neném", companions: 0 },
-            { name: "Beto", companions: 0 },
-            { name: "Rodrigo", companions: 0 },
-            { name: "Cassia", companions: 0 }
-        ];
+        // ⚠️ SUBSTITUA PELA URL DA SUA API / SERVERLESS FUNCTION QUE CONECTA AO NEON
+        const API_URL = 'https://sua-api-serverless.vercel.app/api/passeio'; 
 
+        let participantsData = [];
         const destinationsData = [
             { name: "Praia das Neves & Prainha (Combo / Favorito)", price: 1800, votes: 0, highlight: true },
             { name: "Loreto (Piscinas Naturais)", price: 2300, votes: 0, highlight: false },
             { name: "Ilha dos Frades", price: 2300, votes: 0, highlight: false },
             { name: "Ilha de Itaparica", price: 2500, votes: 0, highlight: false }
         ];
+        let selectedDestinationIndex = 0;
 
-        let selectedDestinationIndex = 0; // Padrão: Praia das Neves & Prainha
+        async function fetchParticipants() {
+            try {
+                const response = await fetch(API_URL);
+                participantsData = await response.json();
+                renderApp();
+            } catch (error) {
+                console.error("Erro ao carregar dados do Neon:", error);
+            }
+        }
+
+        async function updateCompanions(id, companions) {
+            await fetch(`${API_URL}/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ companions: parseInt(companions) })
+            });
+            fetchParticipants();
+        }
+
+        async function removeParticipant(id) {
+            if(confirm("Tem certeza que esta pessoa não poderá ir?")) {
+                await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                fetchParticipants();
+            }
+        }
+
+        async function addParticipant() {
+            const nameInput = document.getElementById("new-participant-name");
+            const name = nameInput.value.trim();
+            if (!name) return alert("Digite o nome da pessoa!");
+
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, companions: 0 })
+            });
+
+            nameInput.value = "";
+            fetchParticipants();
+        }
 
         function renderApp() {
             renderParticipants();
@@ -136,22 +169,24 @@
             const container = document.getElementById("participants-grid");
             container.innerHTML = "";
 
-            participantsData.forEach((p, index) => {
+            participantsData.forEach((p) => {
                 const card = document.createElement("div");
-                card.className = "bg-slate-700/40 p-4 rounded-xl border border-slate-600 flex items-center justify-between";
+                card.className = "bg-slate-700/40 p-4 rounded-xl border border-slate-600 flex flex-col sm:flex-row items-center justify-between gap-3";
                 card.innerHTML = `
-                    <div>
+                    <div class="w-full sm:w-auto text-center sm:text-left">
                         <span class="font-bold text-white text-base">${p.name}</span>
                         <span class="block text-xs text-slate-400">Titular + Acompanhantes</span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <label for="comp-${index}" class="text-xs text-slate-300">Acomp:</label>
-                        <select id="comp-${index}" onchange="updateCompanions(${index}, this.value)" class="bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-1.5 focus:outline-none focus:border-sky-500 font-medium">
-                            <option value="0" ${p.companions === 0 ? 'selected' : ''}>0</option>
-                            <option value="1" ${p.companions === 1 ? 'selected' : ''}>1</option>
-                            <option value="2" ${p.companions === 2 ? 'selected' : ''}>2</option>
-                            <option value="3" ${p.companions === 3 ? 'selected' : ''}>3</option>
+                    <div class="flex items-center gap-3">
+                        <select onchange="updateCompanions(${p.id}, this.value)" class="bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-1.5 focus:outline-none focus:border-sky-500 font-medium">
+                            <option value="0" ${p.companions === 0 ? 'selected' : ''}>0 acomp</option>
+                            <option value="1" ${p.companions === 1 ? 'selected' : ''}>1 acomp</option>
+                            <option value="2" ${p.companions === 2 ? 'selected' : ''}>2 acomp</option>
+                            <option value="3" ${p.companions === 3 ? 'selected' : ''}>3 acomp</option>
                         </select>
+                        <button onclick="removeParticipant(${p.id})" class="bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-bold px-3 py-2 rounded-lg transition" title="Não posso ir">
+                            <i class="fa-solid fa-user-xmark"></i> Não posso ir
+                        </button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -161,108 +196,53 @@
         function renderDestinations() {
             const container = document.getElementById("destinations-grid");
             container.innerHTML = "";
-
             destinationsData.forEach((d, index) => {
                 const isSelected = selectedDestinationIndex === index;
                 const card = document.createElement("div");
-                card.className = `p-4 rounded-xl border transition cursor-pointer flex flex-col justify-between ${
-                    d.highlight ? 'bg-sky-950/40 border-sky-500/80' : 'bg-slate-700/40 border-slate-600'
-                } ${isSelected ? 'ring-2 ring-emerald-500' : ''}`;
-                
+                card.className = `p-4 rounded-xl border transition flex flex-col justify-between ${d.highlight ? 'bg-sky-950/40 border-sky-500/80' : 'bg-slate-700/40 border-slate-600'} ${isSelected ? 'ring-2 ring-emerald-500' : ''}`;
                 card.innerHTML = `
                     <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-bold text-white text-sm sm:text-base">${d.name}</span>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-bold text-white text-sm">${d.name}</span>
                             <span class="text-emerald-400 font-extrabold text-sm">R$ ${d.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
                         </div>
-                        ${d.highlight ? '<span class="inline-block bg-sky-600/30 text-sky-300 text-[10px] px-2 py-0.5 rounded font-semibold mb-2">⭐ Preferência / Mais Vantajoso</span>' : ''}
+                        ${d.highlight ? '<span class="inline-block bg-sky-600/30 text-sky-300 text-[10px] px-2 py-0.5 rounded font-semibold mb-2">⭐ Preferência</span>' : ''}
                     </div>
                     <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-600/50">
-                        <span class="text-xs text-slate-300 font-medium"><i class="fa-solid fa-check-to-slot text-sky-400"></i> Votos: <strong class="text-white">${d.votes}</strong></span>
-                        <button onclick="voteDestination(${index})" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">
-                            Votar neste
-                        </button>
+                        <span class="text-xs text-slate-300">Votos: <strong class="text-white">${d.votes}</strong></span>
+                        <button onclick="selectedDestinationIndex=${index}; renderDestinations(); updateCalculations();" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">Votar</button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function updateCompanions(index, value) {
-            participantsData[index].companions = parseInt(value);
-            updateCalculations();
-        }
-
-        function voteDestination(index) {
-            selectedDestinationIndex = index;
-            destinationsData[index].votes++;
-            renderDestinations();
-            updateCalculations();
-        }
-
         function updateCalculations() {
             let totalPeople = participantsData.reduce((acc, curr) => acc + 1 + curr.companions, 0);
-            const maxSlots = 20;
-            let remaining = maxSlots - totalPeople;
-            if (remaining < 0) remaining = 0;
+            let remaining = Math.max(20 - totalPeople, 0);
 
             document.getElementById("total-people").innerText = totalPeople;
             document.getElementById("remaining-slots").innerText = remaining;
-
-            const percentage = Math.min((totalPeople / maxSlots) * 100, 100);
-            document.getElementById("progress-bar").style.width = `${percentage}%`;
+            document.getElementById("progress-bar").style.width = `${Math.min((totalPeople / 20) * 100, 100)}%`;
 
             const currentDest = destinationsData[selectedDestinationIndex];
-            const discount = 300;
-            const finalTotal = Math.max(currentDest.price - discount, 0);
-            
-            const pricePerPerson = finalTotal / maxSlots;
-            const sinalPerson = pricePerPerson / 2;
+            const finalTotal = Math.max(currentDest.price - 300, 0);
+            const pricePerPerson = finalTotal / 20;
 
             document.getElementById("price-per-person").innerText = `R$ ${pricePerPerson.toFixed(2).replace('.', ',')}`;
-            document.getElementById("sinal-person").innerText = `Sinal (50%): R$ ${sinalPerson.toFixed(2).replace('.', ',')}`;
-
-            const statusMsg = document.getElementById("status-message");
-            if (totalPeople >= 20) {
-                statusMsg.innerText = "🎉 Meta de 20 pessoas atingida! Vagas completas!";
-                statusMsg.className = "text-xs text-emerald-400 font-bold text-right";
-            } else {
-                statusMsg.innerText = `Faltam ${remaining} pessoas para compor os 20.`;
-                statusMsg.className = "text-xs text-amber-400 font-medium text-right";
-            }
+            document.getElementById("sinal-person").innerText = `Sinal (50%): R$ ${(pricePerPerson / 2).toFixed(2).replace('.', ',')}`;
         }
 
         function copyWhatsAppMessage() {
             let totalPeople = participantsData.reduce((acc, curr) => acc + 1 + curr.companions, 0);
-            const currentDest = destinationsData[selectedDestinationIndex];
-            const discount = 300;
-            const finalTotal = Math.max(currentDest.price - discount, 0);
-            const pricePerPerson = finalTotal / 20;
-            const sinalPerson = pricePerPerson / 2;
-
-            let msg = `🚤 *PASSEIO DE ESCUNA / LANCHA* 🚤\n\n`;
-            msg += `📅 *Data:* Sábado, 12/12/2026\n`;
-            msg += `📍 *Destino Escolhido:* ${currentDest.name}\n`;
-            msg += `👥 *Participantes Atuais:* ${totalPeople}/20 confirmados\n\n`;
-            
-            msg += `📋 *Lista de Presença:* \n`;
-            participantsData.forEach(p => {
-                msg += `- ${p.name} (+${p.companions} acomp.)\n`;
-            });
-
-            msg += `\n💰 *Financeiro (Com R$ 300 de desconto):*\n`;
-            msg += `- Valor por pessoa (base 20 pax): R$ ${pricePerPerson.toFixed(2).replace('.', ',')}\n`;
-            msg += `- *Sinal de 50%:* R$ ${sinalPerson.toFixed(2).replace('.', ',')} (Até 25/11)\n\n`;
-            msg += `💳 *Chave Pix (Celular):* 71 991047114\n\n`;
-            msg += `Favor confirmar presença e enviar o comprovante do sinal!`;
-
-            navigator.clipboard.writeText(msg).then(() => {
-                alert("Resumo copiado com sucesso para a área de transferência com a chave Pix! Cole no WhatsApp.");
-            });
+            let msg = `🚤 *PASSEIO DE ESCUNA* 🚤\n📅 12/12/2026\n👥 *Confirmados:* ${totalPeople}/20\n\n📋 *Lista:* \n`;
+            participantsData.forEach(p => { msg += `- ${p.name} (+${p.companions})\n`; });
+            msg += `\n💳 *Pix:* 71 991047114`;
+            navigator.clipboard.writeText(msg).then(() => alert("Copiado para o WhatsApp!"));
         }
 
-        renderApp();
+        // Carregar dados ao iniciar
+        fetchParticipants();
     </script>
 </body>
-  </html>
-  
+</html>
