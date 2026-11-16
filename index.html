@@ -51,17 +51,12 @@
             <p id="status-message" class="text-xs text-slate-400 text-right">Faltam pessoas de bem para fechar o grupo! (rsrs)</p>
         </section>
 
-        <!-- Adicionar Novo Participante -->
-        <section class="bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700">
-            <h2 class="text-xl font-bold text-sky-400 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-user-plus"></i> Adicionar Nova Pessoa de Bem
+        <!-- Inscrições encerradas -->
+        <section class="bg-slate-800 rounded-2xl p-6 shadow-xl border border-amber-500/40">
+            <h2 class="text-xl font-bold text-amber-400 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-lock"></i> Inscrições encerradas
             </h2>
-            <div class="flex gap-2 mt-4">
-                <input type="text" id="new-participant-name" placeholder="Nome do participante..." class="flex-1 bg-slate-700 text-white px-4 py-2 rounded-xl border border-slate-600 focus:outline-none focus:border-sky-500">
-                <button onclick="addParticipant()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-6 py-2 rounded-xl transition">
-                    Adicionar
-                </button>
-            </div>
+            <p class="text-sm text-slate-300">As 20 vagas foram preenchidas. Não é mais possível adicionar novas pessoas.</p>
         </section>
 
         <!-- Lista de Participantes e Acompanhantes -->
@@ -148,18 +143,7 @@
         }
 
         async function addParticipant() {
-            const nameInput = document.getElementById("new-participant-name");
-            const name = nameInput.value.trim();
-            if (!name) return alert("Digite o nome da pessoa!");
-
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, companions: 0 })
-            });
-
-            nameInput.value = "";
-            fetchParticipants();
+            alert("Inscrições encerradas: as 20 vagas foram preenchidas.");
         }
 
         function renderApp() {
